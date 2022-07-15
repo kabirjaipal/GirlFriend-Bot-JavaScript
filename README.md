@@ -12,7 +12,7 @@ GirlFriend Bot Using JavaScript Discord.JS </h1><br/>
 **4.** start the bot with **`node index.js`**
 <br/>
 
-### _Modify - config.json_
+### _Modify - config.js_
 
 ```javascript
 module.exports = {
