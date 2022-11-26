@@ -1,4 +1,8 @@
-const { Client, Intents } = require("discord.js");
+const {
+  Client,
+  GatewayIntentBits,
+  ApplicationCommandType,
+} = require("discord.js");
 const { Player } = require("discordaudio");
 const { getAudioUrl } = require("google-tts-api");
 const fetch = require("node-fetch");
@@ -8,10 +12,10 @@ const { TOKEN } = require("./config");
 
 const client = new Client({
   intents: [
-    Intents.FLAGS.GUILD_VOICE_STATES,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILDS,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.Guilds,
   ],
 });
 
@@ -21,11 +25,12 @@ addSpeechEvent(client, {
 
 client.on("ready", async () => {
   console.log(`bot is online`);
-  client.application.commands.set([
+  // await client.application.commands.set([]);
+  client.guilds.cache.get("903532162236694539").commands.set([
     {
       name: "join",
       description: `join your voice channel`,
-      type: "CHAT_INPUT",
+      type: ApplicationCommandType.ChatInput,
     },
   ]);
 });
@@ -33,10 +38,18 @@ client.on("ready", async () => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.user.bot || !interaction.guild) return;
   if (interaction.isCommand()) {
+    await interaction.deferReply().catch(null);
     switch (interaction.commandName) {
       case "join":
         {
           const voiceChannel = interaction.member?.voice.channel;
+          if (!voiceChannel)
+            return interaction
+              .followUp({
+                content: "You Need To Join Voice Channel",
+                ephemeral: true,
+              })
+              .catch(null);
           if (voiceChannel) {
             joinVoiceChannel({
               channelId: voiceChannel.id,
@@ -45,7 +58,12 @@ client.on("interactionCreate", async (interaction) => {
               selfDeaf: false,
             });
           }
-          interaction.reply(`joined ${voiceChannel}`);
+          interaction
+            .followUp({
+              content: `Joined ${voiceChannel}`,
+              ephemeral: true,
+            })
+            .catch(null);
         }
         break;
 
@@ -57,7 +75,6 @@ client.on("interactionCreate", async (interaction) => {
 
 client.on("speech", async (message) => {
   // start
-  console.log(`content ${message.content}`);
   let string = message.content;
   if (string == undefined || string == "") return;
   const url = `https://api.simsimi.net/v2/?text=${encodeURIComponent(
@@ -72,7 +89,6 @@ client.on("speech", async (message) => {
   // const url =  `https://api.affiliateplus.xyz/api/chatbot?message=${string}&botname=${client.user.username}&ownername=${"tech boy"}&user=${"kabu"}`
   let response = await fetch(url).then((res) => res.json());
   response.success.replace("uck", "fuck");
-  console.log(`responce ${response.success}`);
   const stream = await getAudioUrl(String(response.success), {
     lang: "en",
     slow: false,
@@ -93,6 +109,10 @@ client.on("speech", async (message) => {
   player.on("disconnect", async () => {
     player.reconnect(2000);
   });
+});
+
+client.on("error", (err) => {
+  console.log(err.message);
 });
 
 client.login(TOKEN);
