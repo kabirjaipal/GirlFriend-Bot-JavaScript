@@ -1,25 +1,70 @@
-<h1 align="center">
-GirlFriend Bot Using JavaScript Discord.JS </h1><br/>
+# GirlFriend Bot Discord.JS
 
-## **Installation | How to use the Bot**
+## Installation | How to Use the Bot
 
-**1.** Install [node.js v16](https://nodejs.org/en/) or higher
+1. **Install [Node.js V20](https://nodejs.org/en/) or higher:**
 
-**2.** Download this repo and unzip it | or git clone it
+   - Visit the Node.js website and download the latest version of Node.js.
 
-**3.** Fill in everything in **`config.js`**
+2. **Clone the Repository:**
 
-**4.** start the bot with **`node index.js`**
-<br/>
+   - Download this repository and unzip it, or use Git to clone it to your local machine.
 
-### _Modify - config.js_
+     ```bash
+     git clone https://github.com/your-username/GirlFriend-Bot-JavaScript.git
+     ```
+
+3. **Fill in Configuration:**
+
+   - Open the `config.js` file and fill in the required information.
+
+     ```javascript
+     // config.js
+     module.exports = {
+       TOKEN: process.env.DISCORD_TOKEN,
+     };
+     ```
+
+     Create a `.env` file in the root directory and set your Discord token:
+
+     ```env
+     DISCORD_TOKEN=your_bot_token_here
+     ```
+
+4. **Install Dependencies:**
+
+   - Navigate to the project directory and install the required dependencies.
+
+     ```bash
+     npm install
+     ```
+
+5. **Start the Bot:**
+
+   - Run the following command to start the bot.
+
+     ```bash
+     node index.js
+     ```
+
+## Configuration
+
+Modify the `config.js` file to customize your bot. You can add more configuration options as needed.
 
 ```javascript
+// config.js
+require("dotenv").config();
+
 module.exports = {
-  TOKEN: "TOKEN",
+  token: process.env.DISCORD_TOKEN,
+  // Add more configuration options here
 };
 ```
 
-<br/>
+## Contributing
 
-If Any Bug Open Pull Request
+If you find any bugs or have suggestions for improvements, feel free to open a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
