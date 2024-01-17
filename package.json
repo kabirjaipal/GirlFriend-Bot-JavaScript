@@ -1,6 +1,6 @@
 {
   "name": "gfbot",
-  "version": "1.1.0",
+  "version": "2.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,12 +10,13 @@
   "author": "KabirSingh",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/voice": "^0.13.0",
-    "discord-speech-recognition": "^3.1.1",
-    "discord.js": "^14.6.0",
-    "discordaudio": "^2.8.5",
-    "ffmpeg-static": "^5.1.0",
+    "@discordjs/voice": "^0.16.1",
+    "axios": "^1.6.5",
+    "discord-speech-recognition": "^3.4.1",
+    "discord.js": "^14.14.1",
+    "distube": "^4.1.1",
+    "ffmpeg-static": "^5.2.0",
     "google-tts-api": "^2.0.2",
-    "libsodium-wrappers": "^0.7.10"
+    "libsodium-wrappers": "^0.7.13"
   }
 }
